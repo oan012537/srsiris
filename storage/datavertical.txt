@@ -1,0 +1,3 @@
+letter	frequency
+เลย์ รสโนริสาหร่าย	.30
+เลย์ รส original	.69

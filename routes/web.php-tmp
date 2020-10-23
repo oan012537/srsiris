@@ -1,0 +1,205 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+ */
+
+//Route::get('/', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => 'auth'], function () {
+		Route::get('/dashboard', 'HomeController@dashboard');
+
+		//Product
+		Route::get('/product', 'ProductController@index');
+		Route::get('/product/{cate}', 'ProductController@indexcate');
+		Route::get('/product/{cate}/{sub}', 'ProductController@indexsubcate');
+		Route::get('/productdatatables', 'ProductController@datatable');
+		Route::get('/product-create', 'ProductController@create');
+		Route::post('product_create', 'ProductController@store');
+		Route::post('product_category', 'ProductController@product_category');
+		Route::get('/product-update/{id}', 'ProductController@edit');
+		Route::post('product_update', 'ProductController@update');
+		Route::post('/product-barcode', 'ProductController@barcode');//เพิ่มใหม่
+		Route::get('/product-delete/{id}', 'ProductController@destroy');
+		Route::get('/findstock', 'ProductController@stock');
+		Route::get('product/findunit', 'ProductController@findunit');
+		Route::post('product/imports_create', 'ProductController@import');
+		Route::get('product/hisimport', 'ProductController@historyimport');
+		Route::get('product/hissale', 'ProductController@historysale');
+		Route::get('product/hisexport', 'ProductController@historyexport');
+		Route::post('product/deleteproc', 'ProductController@deleteproc');
+
+		Route::get('/getbarcode/{id}', 'ProductController@getbarcode');
+
+		//Category
+		Route::get('/category', 'CategoryController@index');
+		Route::post('category_create', 'CategoryController@store');
+		Route::post('editcategory', 'CategoryController@edit');
+		Route::post('category_update', 'CategoryController@update');
+		Route::get('/category-delete/{id}', 'CategoryController@destroy');
+
+		//Sub Category
+		Route::get('/subcategory', 'SubcategoryController@index');
+		Route::post('subcategory_create', 'SubcategoryController@store');
+		Route::post('editsubcategory', 'SubcategoryController@edit');
+		Route::post('subcategory_update', 'SubcategoryController@update');
+		Route::get('/subcategory-delete/{id}', 'SubcategoryController@destroy');
+
+		//Unit
+		Route::get('/unit', 'UnitController@index');
+		Route::get('/unitdatatables', 'UnitController@datatable');
+		Route::post('unit_create', 'UnitController@store');
+		Route::post('editunit', 'UnitController@edit');
+		Route::post('unit_update', 'UnitController@update');
+		Route::get('/unit-delete/{id}', 'UnitController@destroy');
+		Route::post('queryunit', 'UnitController@queryunit');
+
+		//Supplier
+		Route::get('/supplier', 'SupplierController@index');
+		Route::get('/supplierdatatables', 'SupplierController@datatable');
+		Route::get('/supplier/create', 'SupplierController@viewcreate');
+		Route::post('supplier_create', 'SupplierController@createdata');
+		Route::get('/supplier/update/{id}', 'SupplierController@viewupdate');
+		Route::post('supplier_update', 'SupplierController@updatedata');
+		Route::get('/supplier-delete/{id}', 'SupplierController@deldata');
+		Route::get('/supplier/product/{id}', 'SupplierController@subpage');
+
+		//Customer
+		Route::get('/customer', 'CustomerController@index');
+		Route::get('/customerdatatables', 'CustomerController@datatable');
+		Route::get('/customer/create', 'CustomerController@create');
+		Route::post('customer_create', 'CustomerController@store');
+		Route::get('/customer/update/{id}', 'CustomerController@edit');
+		Route::post('customer_update', 'CustomerController@update');
+		Route::get('/customer-delete/{id}', 'CustomerController@destroy');
+
+		//Export
+		Route::get('/export', 'ExportController@index');
+		Route::get('/exportdatatables', 'ExportController@datatable');
+		Route::get('/export/create', 'ExportController@create');
+		Route::get('/export-delete/{id}', 'ExportController@destroy');
+		Route::post('export_create', 'ExportController@store');
+
+		Route::get('/export-update/{id}', 'ExportController@edit');
+		Route::post('export_update', 'ExportController@update');
+		Route::get('/export-bill/{id}', 'ExportController@bill');
+		Route::get('/export-mail/{id}', 'ExportController@email');
+
+		Route::get('checkpay/{id}', 'ExportController@checkpay');
+
+		//Exp
+		Route::get('/exp', 'ExpController@index');
+		Route::get('/expdatatables', 'ExpController@datatable');
+		Route::get('/exp/create', 'ExpController@create');
+		Route::post('exp_create', 'ExpController@store');
+		Route::post('enterbarcodeex', 'ExpController@enterbarcodeex');
+
+		//Autocomplete
+		Route::get('/searchcustomername/autocomplete', 'AutocompleteController@searchcustomername');
+		Route::get('/searchcustomertax/autocomplete', 'AutocompleteController@searchcustomertax');
+		Route::get('/searchcustomertel/autocomplete', 'AutocompleteController@searchcustomertel');
+		Route::post('enterbarcode', 'AutocompleteController@enterbarcode');
+		Route::post('enterproduct', 'AutocompleteController@enterproduct');
+		Route::get('/searchproductname/autocomplete', 'AutocompleteController@autocompleteproductname');
+		Route::get('/searchsuppliername/autocomplete', 'AutocompleteController@searchsupplier');
+		Route::get('/searchsuppliertax/autocomplete', 'AutocompleteController@searchsuppliertax');
+
+		Route::post('enterimportsproduct', 'AutocompleteController@enterimportproduct');
+		Route::post('enteimportsrbarcode', 'AutocompleteController@enterimportbarcodeproduct');
+
+		//Imports
+		Route::get('/imports', 'ImportsController@index');
+		Route::get('importsdatatables', 'ImportsController@datatable');
+		Route::get('/imports/create', 'ImportsController@viewcreate');
+		Route::post('imports_create', 'ImportsController@createdata');
+
+		Route::get('/imports_checkprice/{id}', 'ImportsController@checkprice');
+
+		//Report
+		Route::get('/reportexport', 'ReportexportController@index');
+		Route::post('reportdataexport', 'ReportexportController@reportdataexport');
+		Route::post('exportpdf', 'ReportexportController@exportpdf');
+		Route::get('exportexcel/{start}/{end}', 'ReportexportController@exportexcel');
+		Route::get('reportsale', 'ReportsaleController@index');
+		Route::post('reportdatasale', 'ReportsaleController@reportdatasale');
+		Route::post('salepdf', 'ReportsaleController@salepdf');
+		Route::get('saleexcel/{start}/{end}', 'ReportexportController@saleexcel');
+
+		//POS
+		Route::get('pos', 'PosController@index');
+		Route::post('querycarts', 'PosController@querycarts');
+		Route::post('addcarts', 'PosController@addcart');
+		Route::post('updatecarts', 'PosController@updatecarts');
+		Route::post('delcarts', 'PosController@delcarts');
+		Route::post('poscategory', 'PosController@poscategory');
+		Route::post('poskeyword', 'PosController@poskeyword');
+		Route::post('posbarcode', 'PosController@posbarcode');
+		Route::get('postreset', 'PosController@postreset');
+		Route::get('pospayment', 'PosController@pospayment');
+
+		//Transport
+		Route::get('/transport', 'TransportController@index');
+		Route::get('/trandata', 'TransportController@trandata');
+		Route::get('/orderres', 'TransportController@datatable');
+		Route::get('/transport/create', 'TransportController@create');
+		Route::post('transt_create', 'TransportController@store');
+		Route::get('/tran-delete/{id}', 'TransportController@destroy');
+		Route::get('/tran-wait/{id}', 'TransportController@tranwait');
+		Route::get('/tran-approve/{id}', 'TransportController@tranapprove');
+		Route::get('/transport/invoice/{id}', 'TransportController@invoice');
+		Route::post('checkdatatran', 'TransportController@checkdatatran');
+		Route::post('orderdata', 'TransportController@orderdata');
+		Route::post('transport/uploadfile', 'TransportController@uploadfile');
+
+		//Setting
+		Route::get('/setting', 'SettingController@index');
+		Route::post('setting_update', 'SettingController@store');
+
+		//Billing Note
+		Route::get('/billingnote', 'BillingNoteController@index');
+		Route::get('/billingnote/datatable', 'BillingNoteController@datatable');
+		Route::get('//billingnote/delete/{id}', 'BillingNoteController@delete');
+		Route::get('/billingnote/create', 'BillingNoteController@create');
+		Route::post('/billingnote/reportdatasale', 'BillingNoteController@reportdatasale');
+		Route::post('/billingnote/create', 'BillingNoteController@store');
+		Route::get('/billingnote/update/{id}', 'BillingNoteController@viewpay');
+		Route::post('/billingnote/update', 'BillingNoteController@update');
+		Route::get('/billingnote/view/{id}', 'BillingNoteController@viewdata');
+		Route::get('/billingnote/pdf/{id}', 'BillingNoteController@pdf');
+
+		//Packing Note
+		Route::get('/packing', 'PackingController@index');
+		Route::get('/packing/datatable', 'PackingController@datatable');
+		Route::get('//packing/delete/{id}', 'PackingController@delete');
+		// Route::get('/packing/packingitem','PackingController@packingitem');
+		Route::post('/packing/dataproduct/', 'PackingController@dataproduct');
+		Route::post('/packing/scanbarcode/', 'PackingController@scanbarcode');
+		Route::post('/packing/create', 'PackingController@store');
+		Route::get('/packing/update/{id}', 'PackingController@viewpay');
+		Route::post('/packing/update', 'PackingController@update');
+		Route::get('/packing/view/{id}', 'PackingController@viewdata');
+
+		//Report Import
+		Route::get('/reportimport', 'ReportimportController@index');
+		Route::post('reportimportpdf', 'ReportimportController@report');
+
+		Route::get('backoffice/banner', 'BannerController@index');
+	});
+
+## Front End ##
+Route::get('/', 'FrontEndController@index');
+
+Route::get('/aaa', 'FrontEndController@aaa');
+
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/backoffice', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', 'HomeController@logout');
